@@ -81,26 +81,31 @@ http://localhost:8080
 * [x] Inicialización con Fastify + TypeScript
 * [x] Primera ruta `/niveles`
 * [x] Arquitectura por capas
-* [x] Validación con Zod
+* [x] **Validación con Zod 3 integrada en Fastify**
+* [x] **fastify-type-provider-zod implementado**
 * [x] Lectura desde JSON
 * [x] Cache en memoria
+* [x] **OpenAPI/Swagger auto-generado**
+* [x] **Manejo centralizado de errores Zod**
 
 ### 🟡 En progreso
 
-* [ ] Integración de Zod con Fastify (type provider)
-* [ ] Estandarización de respuestas
-* [ ] Manejo centralizado de errores
+* [ ] Crear schemas para Asignaturas
+* [ ] Crear schemas para Objetivos de Aprendizaje
+* [ ] Validación de request body con Zod en rutas
+* [ ] Expandir rutas CRUD
 
 ### 🔵 Próximos pasos
 
-* [ ] Generación de OpenAPI (Swagger)
-* [ ] Spec Driven Development
 * [ ] Nuevos endpoints:
-
-  * [ ] /asignaturas
-  * [ ] /objetivos
-* [ ] Versionado de API
-* [ ] Tests
+  * [ ] GET /asignaturas
+  * [ ] GET /asignaturas/:id/objetivos
+  * [ ] GET /objetivos
+* [ ] Versionado de API (/v1, /v2)
+* [ ] Tests unitarios e integración
+* [ ] CI/CD pipeline
+* [ ] Rate limiting
+* [ ] Autenticación (ruta `/auth` comentada)
 
 ---
 

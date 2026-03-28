@@ -5,4 +5,6 @@ export const NivelSchema = z.object({
     nombre: z.string()
 })
 
-export const NivelesResponseSchema = z.array(NivelSchema)
+export const GetNivelesResponseSchema = z.array(NivelSchema)
+
+export type  GetNivelesResponse = z.infer<typeof GetNivelesResponseSchema>
