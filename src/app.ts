@@ -1,67 +1,66 @@
-  import Fastify from "fastify"
-  import swagger from '@fastify/swagger'
-  import swaggerUi from '@fastify/swagger-ui'
-  import { authRoutes } from "./routes/auth.routes"
-  import { nivelRoutes } from "./routes/nivel.routes"
-  import { ZodError } from "zod"
-  import { 
-    ZodTypeProvider, 
-    serializerCompiler, 
-    validatorCompiler,
-    jsonSchemaTransform
-  } from 'fastify-type-provider-zod'
-  import  { nivelRepository } from "./repositories/nivel.repository"
-  import { buildNivelesService } from "./services/nivel.service"
+import Fastify from 'fastify'
+import swagger from '@fastify/swagger'
+import swaggerUi from '@fastify/swagger-ui'
+import { authRoutes } from './routes/auth.routes'
+import { nivelRoutes } from './routes/nivel.routes'
+import { ZodError } from 'zod'
+import {
+  ZodTypeProvider,
+  serializerCompiler,
+  validatorCompiler,
+  jsonSchemaTransform,
+} from 'fastify-type-provider-zod'
+import { nivelRepository } from './repositories/nivel.repository'
+import { buildNivelesService } from './services/nivel.service'
 
-  const nivelesService = buildNivelesService(nivelRepository)
-  
-  export function buildApp(){
-    const app = Fastify({
-      logger: true
-    }).withTypeProvider<ZodTypeProvider>();
+const nivelesService = buildNivelesService(nivelRepository)
 
-    app.setValidatorCompiler(validatorCompiler);
-    app.setSerializerCompiler(serializerCompiler);
+export function buildApp() {
+  const app = Fastify({
+    logger: true,
+  }).withTypeProvider<ZodTypeProvider>()
 
-    app.setErrorHandler((error, request, reply) => {
-      if (error instanceof ZodError) {
-        return reply.status(400).send({
-          error: "Validation error",
-          issues: error.issues.map( e => ({
-            path: e.path,
-            message: e.message
-          })),
-        });
-      }
-      request.log.error(error);
+  app.setValidatorCompiler(validatorCompiler)
+  app.setSerializerCompiler(serializerCompiler)
 
-      return reply.status(500).send({
-        error: "Internal Server Error"
-      });
-    });
+  app.setErrorHandler((error, request, reply) => {
+    if (error instanceof ZodError) {
+      return reply.status(400).send({
+        error: 'Validation error',
+        issues: error.issues.map((e) => ({
+          path: e.path,
+          message: e.message,
+        })),
+      })
+    }
+    request.log.error(error)
 
-    app.register(swagger, {
-      openapi: {
-        info: {
-          title: 'Curriculum API',
-          description: 'API pública del curriculum educacional chileno',
-          version: '1.0.0'
-        },
-      },
-      transform: jsonSchemaTransform
-    });
-
-    app.register(swaggerUi, {
-      routePrefix: '/docs',
-    });
-
-
-    //routes
-    //app.register(authRoutes, {prefix: "/auth"})
-    app.register(nivelRoutes, {
-      prefix: "/niveles",
-      service: nivelesService
+    return reply.status(500).send({
+      error: 'Internal Server Error',
     })
+  })
 
-    return app
-  }
+  app.register(swagger, {
+    openapi: {
+      info: {
+        title: 'Curriculum API',
+        description: 'API pública del curriculum educacional chileno',
+        version: '1.0.0',
+      },
+    },
+    transform: jsonSchemaTransform,
+  })
+
+  app.register(swaggerUi, {
+    routePrefix: '/docs',
+  })
+
+  //routes
+  //app.register(authRoutes, {prefix: "/auth"})
+  app.register(nivelRoutes, {
+    prefix: '/niveles',
+    service: nivelesService,
+  })
+
+  return app
+}
