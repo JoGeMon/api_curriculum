@@ -1,24 +1,17 @@
 import {FastifyReply, FastifyRequest} from 'fastify'
-import { listNiveles } from '../services/nivel.service'
 import { GetNivelesResponse } from '../schemas/nivel.schema'
-import { reloadNiveles } from '../services/nivel.service'
 
-export const getNivelesHandler =  async (
-    request: FastifyRequest,
-    reply: FastifyReply
-) => {
-    const niveles: GetNivelesResponse = await listNiveles()
-    return niveles;
 
-}
+export const getNivelesHandler =  (service: any ) => {
+    return async (request: FastifyRequest, reply: FastifyReply) => {
+        const niveles: GetNivelesResponse = await service.listNiveles()
+        return reply.send(niveles);
+    };
+};
 
-export const reloadNivelesHandler = async (
-    request: FastifyRequest,
-    reply: FastifyReply
-) => {
-    await reloadNiveles()
-    return reply.send({
-        status: 'success',
-        message: 'Niveles recargados exitosamente'
-    })
-}
+export const reloadNivelesHandler = (service: any) => {
+    return async (request: FastifyRequest, reply: FastifyReply) => {
+        await service.reloadNiveles()
+        return reply.send({status: "ok"})
+    };
+};

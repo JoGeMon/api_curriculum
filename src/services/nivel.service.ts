@@ -1,12 +1,15 @@
-import { getAllNiveles } from "../repositories/nivel.repository";
 import { GetNivelesResponseSchema } from "../schemas/nivel.schema";
-import { loadNiveles } from "../repositories/nivel.repository";
+import { NivelesRepositoryPort } from "../ports/niveles.port";
+import { getAllNiveles, loadNiveles } from "../repositories/nivel.repository";
 
-export async function listNiveles(){
-    const niveles =  getAllNiveles()
-    return GetNivelesResponseSchema.parse(niveles)
-}
-
-export const reloadNiveles = async (): Promise<void> => {
-  await loadNiveles();
+export const buildNivelesService = (repo: NivelesRepositoryPort) => {
+  return {
+    listniveles: async () => {
+      const niveles = await repo.getAll();
+      return GetNivelesResponseSchema.parse(niveles);
+    },
+    reloadNiveles: async (): Promise<void> => {
+      await repo.reload();
+    },
+  };
 };

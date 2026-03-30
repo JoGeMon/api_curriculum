@@ -2,6 +2,7 @@ import fs from 'fs/promises'
 import path from 'path'
 import { generateETag } from '../utils/etag'
 import { Nivel } from '../types/nivel.types'
+import { NivelesRepositoryPort } from '../ports/niveles.port'
 
 let nivelesCache: Nivel[] | null = null
 let nivelesETag: string | null = null
@@ -20,4 +21,13 @@ export const getAllNiveles = (): Nivel[] => {
         throw new Error('Niveles no cargados')
     }
     return nivelesCache
+}
+
+export const nivelRepository: NivelesRepositoryPort = {
+    getAll: async ()  => {
+        return getAllNiveles();
+    },
+    reload: async () => {
+        await loadNiveles();
+    }
 }

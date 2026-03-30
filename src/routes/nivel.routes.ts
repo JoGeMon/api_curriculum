@@ -4,8 +4,9 @@ import { GetNivelesResponseSchema } from "../schemas/nivel.schema";
 import { ZodTypeProvider } from "fastify-type-provider-zod";
 import { reloadNivelesHandler } from "../controllers/nivel.controller";
 import { z } from "zod";
+import { NivelesRepositoryPort } from "../ports/niveles.port";
 
-export async function nivelRoutes(server: FastifyInstance){
+export async function nivelRoutes(server: FastifyInstance, opts: { service: any}) {
     server.get(
         '/', 
         {
@@ -18,7 +19,7 @@ export async function nivelRoutes(server: FastifyInstance){
                 },
             },
         },
-        getNivelesHandler
+        getNivelesHandler(opts.service)
     );
 
     server.post(
@@ -32,7 +33,7 @@ export async function nivelRoutes(server: FastifyInstance){
                 },
             },
         },
-        reloadNivelesHandler
+        reloadNivelesHandler(opts.service)
     );
 }
 

@@ -10,7 +10,11 @@
     validatorCompiler,
     jsonSchemaTransform
   } from 'fastify-type-provider-zod'
+  import  { nivelRepository } from "./repositories/nivel.repository"
+  import { buildNivelesService } from "./services/nivel.service"
 
+  const nivelesService = buildNivelesService(nivelRepository)
+  
   export function buildApp(){
     const app = Fastify({
       logger: true
@@ -54,7 +58,10 @@
 
     //routes
     //app.register(authRoutes, {prefix: "/auth"})
-    app.register(nivelRoutes, {prefix: "/niveles"})
+    app.register(nivelRoutes, {
+      prefix: "/niveles",
+      service: nivelesService
+    })
 
     return app
   }
