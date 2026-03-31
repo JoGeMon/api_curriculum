@@ -3,8 +3,12 @@ import { GetNivelesResponse } from '../schemas/nivel.schema'
 
 export const getNivelesHandler = (service: any) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
-    const niveles: GetNivelesResponse = await service.listNiveles()
-    return reply.send(niveles)
+    const niveles = await service.listNiveles()
+    console.log('RESPUESTA:', niveles)
+    return reply.send({
+      success: true,
+      data: niveles,
+    })
   }
 }
 

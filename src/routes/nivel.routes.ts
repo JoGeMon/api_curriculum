@@ -19,7 +19,7 @@ export async function nivelRoutes(
           'Obtiene una lista de todos los niveles del curriculum nacional chileno disponibles en el sistema.',
         tags: ['Niveles'],
         response: {
-          200: GetNivelesResponseSchema,
+          200: z.any(),
         },
       },
     },

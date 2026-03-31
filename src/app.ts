@@ -12,6 +12,7 @@ import {
 } from 'fastify-type-provider-zod'
 import { nivelRepository } from './repositories/nivel.repository'
 import { buildNivelesService } from './services/nivel.service'
+import { AppError } from './utils/ap-error'
 
 const nivelesService = buildNivelesService(nivelRepository)
 
@@ -26,17 +27,36 @@ export function buildApp() {
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ZodError) {
       return reply.status(400).send({
-        error: 'Validation error',
-        issues: error.issues.map((e) => ({
-          path: e.path,
-          message: e.message,
-        })),
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Error de validación',
+          details: error.issues.map((e) => ({
+            path: e.path,
+            message: e.message,
+          })),
+        },
       })
     }
+
+    if (error instanceof AppError) {
+      return reply.status(error.statusCode).send({
+        success: false,
+        error: {
+          code: error.code,
+          message: error.message,
+          details: error.details,
+        },
+      })
+    }
+
     request.log.error(error)
 
     return reply.status(500).send({
-      error: 'Internal Server Error',
+      success: false,
+      error: {
+        code: 'INTERNAL_ERROR',
+        message: 'Error interno del servidor',
+      },
     })
   })
 
