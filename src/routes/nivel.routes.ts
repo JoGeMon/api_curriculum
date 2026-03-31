@@ -1,16 +1,31 @@
 import { FastifyInstance } from 'fastify'
-import { getNivelesHandler } from '../controllers/nivel.controller'
-import { GetNivelesResponseSchema } from '../schemas/nivel.schema'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { reloadNivelesHandler } from '../controllers/nivel.controller'
-import { z } from 'zod'
-import { NivelesRepositoryPort } from '../ports/niveles.port'
+
+import {
+  getNivelesHandler,
+  getNivelByIdHandler,
+  reloadNivelesHandler,
+} from '../controllers/nivel.controller'
+
+import { GetNivelesResponseSchema } from '../schemas/nivel.schema'
+
+import {
+  GetNivelByIdParamsSchema,
+  GetNiivelByIdResponseSchema,
+} from '../schemas/get-nivel-by-id.schema'
+
+import { buildNivelesService } from '../services/nivel.service'
+
+type NivelesService = ReturnType<typeof buildNivelesService>
 
 export async function nivelRoutes(
   server: FastifyInstance,
-  opts: { service: any },
+  opts: { service: NivelesService },
 ) {
-  server.get(
+  const app = server.withTypeProvider<ZodTypeProvider>()
+  const { service } = opts
+
+  app.get(
     '/',
     {
       schema: {
@@ -19,11 +34,27 @@ export async function nivelRoutes(
           'Obtiene una lista de todos los niveles del curriculum nacional chileno disponibles en el sistema.',
         tags: ['Niveles'],
         response: {
-          200: z.any(),
+          200: GetNivelesResponseSchema,
         },
       },
     },
-    getNivelesHandler(opts.service),
+    getNivelesHandler(service),
+  )
+
+  server.get(
+    '/:id',
+    {
+      schema: {
+        summary: 'Obtener nivel por ID',
+        description: 'Obtiene un nivel específico por su ID',
+        tags: ['Niveles'],
+        params: GetNivelByIdParamsSchema,
+        response: {
+          200: GetNiivelByIdResponseSchema,
+        },
+      },
+    },
+    getNivelByIdHandler(service),
   )
 
   server.post(
@@ -31,12 +62,10 @@ export async function nivelRoutes(
     {
       schema: {
         response: {
-          200: z.object({
-            status: z.string(),
-          }),
+          200: GetNivelesResponseSchema,
         },
       },
     },
-    reloadNivelesHandler(opts.service),
+    reloadNivelesHandler(service),
   )
 }

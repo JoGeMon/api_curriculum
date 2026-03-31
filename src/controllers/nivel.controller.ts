@@ -1,5 +1,6 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { GetNivelesResponse } from '../schemas/nivel.schema'
+import { GetNivelByIdParams } from '../schemas/get-nivel-by-id.schema'
 
 export const getNivelesHandler = (service: any) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
@@ -16,5 +17,19 @@ export const reloadNivelesHandler = (service: any) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
     await service.reloadNiveles()
     return reply.send({ status: 'ok' })
+  }
+}
+
+export const getNivelByIdHandler = (service: any) => {
+  return async (
+    request: FastifyRequest<{ Params: GetNivelByIdParams }>,
+    reply: FastifyReply,
+  ) => {
+    const { id } = request.params
+    const nivel = await service.getNivelById(id)
+    return reply.send({
+      success: true,
+      data: nivel,
+    })
   }
 }

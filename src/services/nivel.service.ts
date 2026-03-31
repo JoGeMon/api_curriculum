@@ -1,9 +1,9 @@
 import { GetNivelesResponseSchema } from '../schemas/nivel.schema'
-import { NivelesRepositoryPort } from '../ports/niveles.port'
 import { getAllNiveles, loadNiveles } from '../repositories/nivel.repository'
+import { NivelesRepository } from '../repositories/nivel.repository'
 import { AppError } from '../utils/ap-error'
 
-export const buildNivelesService = (repo: NivelesRepositoryPort) => {
+export const buildNivelesService = (repo: NivelesRepository) => {
   return {
     listNiveles: async () => {
       const niveles = await repo.getAll()
@@ -13,9 +13,9 @@ export const buildNivelesService = (repo: NivelesRepositoryPort) => {
       await repo.reload()
     },
 
-    listNivelById: async (id: number) => {
-      const niveles = await repo.getAll()
-      const nivel = niveles.find((n) => n.id === id)
+    getNivelById: async (id: number) => {
+      const nivel = await repo.getById(id)
+
       if (!nivel) {
         throw new AppError(
           'NIVEL_NOT_FOUND',
