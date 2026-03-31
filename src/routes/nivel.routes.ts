@@ -7,12 +7,17 @@ import {
   reloadNivelesHandler,
 } from '../controllers/nivel.controller'
 
-import { GetNivelesResponseSchema } from '../schemas/nivel.schema'
+import {
+  GetNivelesResponseSchema,
+  ReloadResponseSchema,
+} from '../schemas/nivel.schema'
 
 import {
   GetNivelByIdParamsSchema,
   GetNiivelByIdResponseSchema,
 } from '../schemas/get-nivel-by-id.schema'
+
+import { ErrorResponseSchema } from '../schemas/common/error-response.schema'
 
 import { buildNivelesService } from '../services/nivel.service'
 
@@ -35,13 +40,14 @@ export async function nivelRoutes(
         tags: ['Niveles'],
         response: {
           200: GetNivelesResponseSchema,
+          500: ErrorResponseSchema,
         },
       },
     },
     getNivelesHandler(service),
   )
 
-  server.get(
+  app.get(
     '/:id',
     {
       schema: {
@@ -50,19 +56,22 @@ export async function nivelRoutes(
         tags: ['Niveles'],
         params: GetNivelByIdParamsSchema,
         response: {
-          200: GetNiivelByIdResponseSchema,
+          200: GetNivelByIdParamsSchema,
+          404: ErrorResponseSchema,
+          500: ErrorResponseSchema,
         },
       },
     },
     getNivelByIdHandler(service),
   )
 
-  server.post(
+  app.post(
     '/reload',
     {
       schema: {
         response: {
-          200: GetNivelesResponseSchema,
+          200: ReloadResponseSchema,
+          500: ErrorResponseSchema,
         },
       },
     },

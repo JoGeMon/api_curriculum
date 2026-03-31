@@ -25,19 +25,6 @@ export function buildApp() {
   app.setSerializerCompiler(serializerCompiler)
 
   app.setErrorHandler((error, request, reply) => {
-    if (error instanceof ZodError) {
-      return reply.status(400).send({
-        error: {
-          code: 'VALIDATION_ERROR',
-          message: 'Error de validación',
-          details: error.issues.map((e) => ({
-            path: e.path,
-            message: e.message,
-          })),
-        },
-      })
-    }
-
     if (error instanceof AppError) {
       return reply.status(error.statusCode).send({
         success: false,
@@ -50,6 +37,17 @@ export function buildApp() {
     }
 
     request.log.error(error)
+
+    if (error instanceof ZodError) {
+      return reply.status(400).send({
+        success: false,
+        error: {
+          code: 'VALIDATION_ERROR',
+          message: 'Error de validación',
+          details: error.flatten(),
+        },
+      })
+    }
 
     return reply.status(500).send({
       success: false,

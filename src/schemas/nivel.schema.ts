@@ -10,4 +10,8 @@ export const GetNivelesResponseSchema = SuccessResponseSchema(
   z.array(NivelSchema),
 )
 
+export const ReloadResponseSchema = z.object({
+  success: z.literal(true),
+})
+
 export type GetNivelesResponse = z.infer<typeof GetNivelesResponseSchema>
