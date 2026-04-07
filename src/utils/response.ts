@@ -1,4 +1,6 @@
-export const successResponse = <T>(data: T) => ({
+import { SuccessResponse } from '../schemas/response.schema'
+
+export const successResponse = <T>(data: T): SuccessResponse<T> => ({
   success: true as const,
   data,
 })
