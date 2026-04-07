@@ -2,7 +2,6 @@ import fs from 'fs/promises'
 import path from 'path'
 import { generateETag } from '../utils/etag'
 import { Nivel } from '../types/nivel.types'
-import { NivelesRepositoryPort } from '../ports/niveles.port'
 import { NivelSchema } from '../schemas/nivel.schema'
 import { z } from 'zod'
 
@@ -27,11 +26,31 @@ export const getAllNiveles = (): Nivel[] => {
   return NivelesSchema.parse(nivelesCache)
 }
 
-export const nivelRepository: NivelesRepositoryPort = {
+export const getNivelById = async (id: number): Promise<Nivel | null> => {
+  console.log('%c' + process.cwd(), 'color:green')
+  const niveles = await getAllNiveles()
+  const nivel = niveles.find((n) => n.id === id)
+  if (!nivel) {
+    return null
+  }
+
+  return NivelSchema.parse(nivel)
+}
+
+export const nivelRepository: NivelesRepository = {
   getAll: async () => {
     return getAllNiveles()
+  },
+  getById: async (id: number) => {
+    return getNivelById(id)
   },
   reload: async () => {
     await loadNiveles()
   },
+}
+
+export interface NivelesRepository {
+  getAll: () => Promise<Nivel[]>
+  getById: (id: number) => Promise<Nivel | null>
+  reload: () => Promise<void>
 }

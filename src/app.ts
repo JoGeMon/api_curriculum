@@ -13,6 +13,7 @@ import {
 import { nivelRepository } from './repositories/nivel.repository'
 import { buildNivelesService } from './services/nivel.service'
 import { AppError } from './utils/ap-error'
+import { errorResponse } from './utils/response'
 
 const nivelesService = buildNivelesService(nivelRepository)
 
@@ -26,38 +27,30 @@ export function buildApp() {
 
   app.setErrorHandler((error, request, reply) => {
     if (error instanceof ZodError) {
-      return reply.status(400).send({
-        error: {
-          code: 'VALIDATION_ERROR',
-          message: 'Error de validación',
-          details: error.issues.map((e) => ({
-            path: e.path,
-            message: e.message,
-          })),
-        },
-      })
+      return reply
+        .status(400)
+        .send(
+          errorResponse(
+            'VALIDATION_ERROR',
+            'Error de validación',
+            error.flatten(),
+          ),
+        )
     }
 
     if (error instanceof AppError) {
-      return reply.status(error.statusCode).send({
-        success: false,
-        error: {
-          code: error.code,
-          message: error.message,
-          details: error.details,
-        },
-      })
+      return reply
+        .status(error.statusCode)
+        .send(errorResponse(error.code, error.message, error.details))
     }
 
     request.log.error(error)
 
-    return reply.status(500).send({
-      success: false,
-      error: {
-        code: 'INTERNAL_ERROR',
-        message: 'Error interno del servidor',
-      },
-    })
+    return reply
+      .status(500)
+      .send(
+        errorResponse('INTERNAL_SERVER_ERROR', 'Error interno del servidor'),
+      )
   })
 
   app.register(swagger, {
