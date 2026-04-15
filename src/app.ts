@@ -2,7 +2,8 @@ import Fastify from 'fastify'
 import swagger from '@fastify/swagger'
 import swaggerUi from '@fastify/swagger-ui'
 import { authRoutes } from './routes/auth.routes'
-import { nivelRoutes } from './routes/nivel.routes'
+import { cursoRoutes } from './routes/curso.routes'
+import { asignaturaRoutes } from './routes/asignatura.routes'
 import { ZodError } from 'zod'
 import {
   ZodTypeProvider,
@@ -10,12 +11,15 @@ import {
   validatorCompiler,
   jsonSchemaTransform,
 } from 'fastify-type-provider-zod'
-import { nivelRepository } from './repositories/nivel.repository'
-import { buildNivelesService } from './services/nivel.service'
+import { cursoRepository } from './repositories/curso.repository'
+import { buildCursosService } from './services/curso.service'
+import { asignaturaRepository } from './repositories/asignatura.repository'
+import { buildAsignaturasService } from './services/asignatura.service'
 import { AppError } from './utils/ap-error'
 import { errorResponse } from './utils/response'
 
-const nivelesService = buildNivelesService(nivelRepository)
+const cursosService = buildCursosService(cursoRepository)
+const asignaturasService = buildAsignaturasService(asignaturaRepository)
 
 export function buildApp() {
   const app = Fastify({
@@ -70,9 +74,14 @@ export function buildApp() {
 
   //routes
   //app.register(authRoutes, {prefix: "/auth"})
-  app.register(nivelRoutes, {
-    prefix: '/niveles',
-    service: nivelesService,
+  app.register(cursoRoutes, {
+    prefix: '/cursos',
+    service: cursosService,
+  })
+
+  app.register(asignaturaRoutes, {
+    prefix: '/asignaturas',
+    service: asignaturasService,
   })
 
   return app

@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "nombre": "Matemáticas",
+        "id_cursos": [1,2,3,4,5,6,7,8]
+    },
+    {
+        "id": 2,
+        "nombre": "Lenguaje",
+        "id_cursos": [1,2,3,4,5,6,7,8]
+
+    },
+    {
+        "id": 3,
+        "nombre": "Ciencias Naturales",
+        "id_cursos": [1,2,3,4,5,6,7,8]
+    }
+]
