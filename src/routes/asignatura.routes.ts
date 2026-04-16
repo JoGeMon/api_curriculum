@@ -1,8 +1,15 @@
 import { FastifyInstance } from 'fastify/types/instance'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
 import { GetAsignaturasResponseSchema } from '../schemas/asignatura.schema'
-import { getAsignaturasHandler } from '../controllers/asignatura.controller'
+import {
+  getAsignaturasByIdHandler,
+  getAsignaturasHandler,
+} from '../controllers/asignatura.controller'
 import { buildAsignaturasService } from '../services/asignatura.service'
+import {
+  GetAsignaturaByIdParamsSchema,
+  GetAsignaturaByIdResponseSchema,
+} from '../schemas/get-asignatura-by-id.schema'
 
 type AsignaturaService = ReturnType<typeof buildAsignaturasService>
 
@@ -29,7 +36,6 @@ export async function asignaturaRoutes(
     getAsignaturasHandler(service),
   )
 
-  /*
   app.get(
     '/:id',
     {
@@ -38,15 +44,15 @@ export async function asignaturaRoutes(
         description:
           'Obtiene los detalles de una asignatura específica por su ID, junto a un listado de todos los cursos asociados.',
         tags: ['Asignaturas'],
-        params: any(),
+        params: GetAsignaturaByIdParamsSchema,
         response: {
-          200: GetAsignaturasResponseSchema,
+          200: GetAsignaturaByIdResponseSchema,
         },
       },
     },
-    getAsignaturaByIdHandler(service),
+    getAsignaturasByIdHandler(service),
   )
-
+  /*
   app.get(
     '/:nivel_id',
     {

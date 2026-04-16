@@ -11,7 +11,6 @@ let cursosCache: Curso[] | null = null
 let cursosETag: string | null = null
 
 export const loadCursos = async (): Promise<void> => {
-  console.log('%c' + process.cwd(), 'color:green')
   const filePath = path.join(process.cwd(), 'src/data/cursos.json')
   const data = await fs.readFile(filePath, 'utf-8')
   cursosCache = JSON.parse(data)
@@ -19,7 +18,6 @@ export const loadCursos = async (): Promise<void> => {
 }
 
 export const getAllCursos = (): Curso[] => {
-  console.log('%c' + process.cwd(), 'color:green')
   if (!cursosCache) {
     throw new Error('Cursos no cargados')
   }
@@ -27,7 +25,6 @@ export const getAllCursos = (): Curso[] => {
 }
 
 export const getCursoById = async (id: number): Promise<Curso | null> => {
-  console.log('%c' + process.cwd(), 'color:green')
   const cursos = await getAllCursos()
   const curso = cursos.find((c) => c.id === id)
   if (!curso) {

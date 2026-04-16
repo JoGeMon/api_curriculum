@@ -16,6 +16,9 @@
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
 
+    "noUncheckedIndexedAccess": true,
+    "exactOptionalPropertyTypes": true,
+
     /* Experiencia */
     "skipLibCheck": true
   },

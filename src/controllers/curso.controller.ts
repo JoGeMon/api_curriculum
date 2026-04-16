@@ -26,8 +26,6 @@ export const getCursoByIdHandler = (service: CursosService) => {
   ) => {
     const { id } = request.params
     const curso = await service.getCursoById(id)
-    console.log('RESPUESTA:')
-    console.table(curso)
     return reply.send(successResponse(curso))
   }
 }
