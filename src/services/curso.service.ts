@@ -1,5 +1,5 @@
 import { CursosRepository } from '../repositories/curso.repository'
-import { AppError } from '../utils/ap-error'
+import { AppError } from '../utils/app-error'
 
 export const buildCursosService = (repo: CursosRepository) => {
   return {

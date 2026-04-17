@@ -1,5 +1,5 @@
 import { AsignaturasRepository } from '../repositories/asignatura.repository'
-import { AppError } from '../utils/ap-error'
+import { AppError } from '../utils/app-error'
 
 export const buildAsignaturasService = (repo: AsignaturasRepository) => {
   return {

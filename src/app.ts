@@ -4,7 +4,7 @@ import swaggerUi from '@fastify/swagger-ui'
 import { authRoutes } from './routes/auth.routes'
 import { cursoRoutes } from './routes/curso.routes'
 import { asignaturaRoutes } from './routes/asignatura.routes'
-import { ZodError } from 'zod'
+
 import {
   ZodTypeProvider,
   serializerCompiler,
@@ -15,8 +15,7 @@ import { cursoRepository } from './repositories/curso.repository'
 import { buildCursosService } from './services/curso.service'
 import { asignaturaRepository } from './repositories/asignatura.repository'
 import { buildAsignaturasService } from './services/asignatura.service'
-import { AppError } from './utils/ap-error'
-import { errorResponse } from './utils/response'
+import { registerErrorHandler } from './plugins/error-handler'
 
 const cursosService = buildCursosService(cursoRepository)
 const asignaturasService = buildAsignaturasService(asignaturaRepository)
@@ -29,33 +28,7 @@ export function buildApp() {
   app.setValidatorCompiler(validatorCompiler)
   app.setSerializerCompiler(serializerCompiler)
 
-  app.setErrorHandler((error, request, reply) => {
-    if (error instanceof ZodError) {
-      return reply
-        .status(400)
-        .send(
-          errorResponse(
-            'VALIDATION_ERROR',
-            'Error de validación',
-            error.flatten(),
-          ),
-        )
-    }
-
-    if (error instanceof AppError) {
-      return reply
-        .status(error.statusCode)
-        .send(errorResponse(error.code, error.message, error.details))
-    }
-
-    request.log.error(error)
-
-    return reply
-      .status(500)
-      .send(
-        errorResponse('INTERNAL_SERVER_ERROR', 'Error interno del servidor'),
-      )
-  })
+  registerErrorHandler(app)
 
   app.register(swagger, {
     openapi: {
