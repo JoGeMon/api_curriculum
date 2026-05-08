@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { SuccessResponseSchema } from './common/response.schema'
-import { CursoSchema } from './curso.schema'
+import { SuccessResponseSchema } from '../../common/response.schema'
+import { CursoSchema } from '../../models/curso.schema'
 
 // Params
 export const GetCursoByIdParamsSchema = z.object({

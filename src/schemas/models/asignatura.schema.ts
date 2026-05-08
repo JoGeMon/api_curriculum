@@ -1,5 +1,5 @@
 import { z } from 'zod'
-import { SuccessResponseSchema } from './common/response.schema'
+import { SuccessResponseSchema } from '../common/response.schema'
 import { CursoSchema } from './curso.schema'
 
 export const AsignaturaDataSchema = z.object({

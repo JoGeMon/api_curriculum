@@ -1,7 +1,7 @@
 import { FastifyInstance } from 'fastify'
 import { AppError } from '../utils/app-error'
 import { ZodError } from 'zod'
-import { errorResponse } from '../utils/response'
+import { errorResponse } from '../utils/http-response'
 
 export const registerErrorHandler = (app: FastifyInstance) => {
   app.setErrorHandler((error, request, reply) => {

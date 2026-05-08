@@ -4,8 +4,8 @@
     "target": "ES2020",
 
     /* Módulos */
-    "module": "CommonJS",
-    "moduleResolution": "node",
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
 
     /* Estructura del proyecto */
     "rootDir": "src",
@@ -20,7 +20,11 @@
     "exactOptionalPropertyTypes": true,
 
     /* Experiencia */
-    "skipLibCheck": true
+    "skipLibCheck": true,
+
+    "paths": {
+      "@/*": ["./src/*"]
+    }
   },
   "include": ["src"]
 }

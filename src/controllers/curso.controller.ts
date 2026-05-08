@@ -1,7 +1,7 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
-import { GetCursoByIdParams } from '../schemas/get-curso-by-id.schema'
+import { GetCursoByIdParams } from '../schemas/http/cursos/get-curso-by-id.schema'
 import { buildCursosService } from '../services/curso.service'
-import { successResponse } from '../utils/response'
+import { successResponse } from '../utils/http-response'
 
 type CursosService = ReturnType<typeof buildCursosService>
 

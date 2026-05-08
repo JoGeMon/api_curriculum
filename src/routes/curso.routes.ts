@@ -10,12 +10,12 @@ import {
 import {
   GetCursosResponseSchema,
   ReloadResponseSchema,
-} from '../schemas/curso.schema'
+} from '../schemas/models/curso.schema'
 
 import {
   GetCursoByIdParamsSchema,
   GetCursoByIdResponseSchema,
-} from '../schemas/get-curso-by-id.schema'
+} from '../schemas/http/cursos/get-curso-by-id.schema'
 
 import { ErrorResponseSchema } from '../schemas/common/error-response.schema'
 

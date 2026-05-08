@@ -1,6 +1,6 @@
 import { FastifyInstance } from 'fastify/types/instance'
 import { ZodTypeProvider } from 'fastify-type-provider-zod'
-import { GetAsignaturasResponseSchema } from '../schemas/asignatura.schema'
+import { GetAsignaturasResponseSchema } from '../schemas/models/asignatura.schema'
 import {
   getAsignaturasByIdHandler,
   getAsignaturasHandler,
@@ -9,7 +9,7 @@ import { buildAsignaturasService } from '../services/asignatura.service'
 import {
   GetAsignaturaByIdParamsSchema,
   GetAsignaturaByIdResponseSchema,
-} from '../schemas/get-asignatura-by-id.schema'
+} from '../schemas/http/asigntatura/get-asignatura-by-id.schema'
 
 type AsignaturaService = ReturnType<typeof buildAsignaturasService>
 

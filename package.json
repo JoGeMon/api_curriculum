@@ -8,7 +8,8 @@
     "build": "tsc",
     "start": "node dist/app.js",
     "lint": "eslint src --ext .ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "build:curriculum": "tsx src/datasources/builder/curso-asignatura.builder.ts"
   },
   "keywords": [],
   "author": "",

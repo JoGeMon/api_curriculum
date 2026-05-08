@@ -1,6 +1,6 @@
 import { Asignatura } from '../types/asignatura.type'
 import { getAllAsignaturas } from '../datasources/asignatura.data'
-import { AsignaturaSchema } from '../schemas/asignatura.schema'
+import { AsignaturaSchema } from '../schemas/models/asignatura.schema'
 
 export const getAsignaturaByCursoId = async (id: number) => {
   const asignaturas = await getAllAsignaturas()

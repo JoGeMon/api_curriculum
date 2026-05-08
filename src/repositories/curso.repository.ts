@@ -1,9 +1,11 @@
-import { Curso } from '../types/curso.types'
-import { CursoSchema } from '../schemas/curso.schema'
-import { getAllCursos } from '../datasources/curso.data'
+import { CursoAsignatura } from '../types/curso-asignatura.type'
+import { CursoSchema } from '../schemas/models/curso.schema'
+import { getCursoAsignatura } from '../datasources/files/curso-asignatura.file'
 
-export const getCursoById = async (id: number): Promise<Curso | null> => {
-  const cursos = await getAllCursos()
+export const getCursoById = async (
+  id: number,
+): Promise<CursoAsignatura | null> => {
+  const cursos = await getCursoAsignatura()
   const curso = cursos.find((c) => c.id === id)
   if (!curso) {
     throw new Error('Asignatura no encontrada')
@@ -13,18 +15,19 @@ export const getCursoById = async (id: number): Promise<Curso | null> => {
 
 export const cursoRepository: CursosRepository = {
   getAll: async () => {
-    return getAllCursos()
+    //return getAllCursos()
+    return getCursoAsignatura()
   },
   getById: async (id: number) => {
     return getCursoById(id)
   },
   reload: async () => {
-    await loadCursos()
+    //    await loadCursos()//
   },
 }
 
 export interface CursosRepository {
-  getAll: () => Promise<Curso[]>
-  getById: (id: number) => Promise<Curso | null>
+  getAll: () => Promise<CursoAsignatura[]>
+  getById: (id: number) => Promise<CursoAsignatura | null>
   reload: () => Promise<void>
 }

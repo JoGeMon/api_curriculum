@@ -1,14 +1,29 @@
 import { FastifyReply, FastifyRequest } from 'fastify'
 import { buildAsignaturasService } from '../services/asignatura.service'
-import { successResponse } from '../utils/response'
-import { GetAsignaturaByIdParams } from '../schemas/get-asignatura-by-id.schema'
-import { getAsignaturasETag } from '../repositories/asignatura.repository'
+import { successResponse } from '../utils/http-response'
+import { GetAsignaturaByIdParams } from '../schemas/http/asigntatura/get-asignatura-by-id.schema'
+import { getAsignaturasETag } from '../datasources/asignatura.data'
 
 type AsignaturaService = ReturnType<typeof buildAsignaturasService>
 
 export const getAsignaturasHandler = (service: AsignaturaService) => {
   return async (request: FastifyRequest, reply: FastifyReply) => {
+    const etag = getAsignaturasETag()
+    const clienteETag = request.headers['if-none-match']
+
+    const normalize = (value?: string) => value?.replace(/"/g, '').trim()
+    if (etag && normalize(clienteETag) === normalize(etag)) {
+      return reply.status(304).send()
+    }
+
     const asignaturas = await service.getAsignaturas()
+
+    console.log({
+      etag,
+      clienteETag,
+    })
+
+    reply.header('ETag', etag ?? '')
     return reply.send(successResponse(asignaturas))
   }
 }

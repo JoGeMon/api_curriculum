@@ -3,7 +3,7 @@ import { generateETag } from '../utils/etag'
 import { z } from 'zod'
 import { loadCursosFromFiles } from '../datasources/loaders/curso.loader'
 
-import { CursoSchema } from '../schemas/curso.schema'
+import { CursoSchema } from '../schemas/models/curso.schema'
 
 const CursosSchema = z.array(CursoSchema)
 

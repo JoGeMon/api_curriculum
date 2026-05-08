@@ -1,6 +1,6 @@
 import { z } from 'zod'
-import { SuccessResponseSchema } from './common/response.schema'
-import { AsignaturaSchema } from './asignatura.schema'
+import { SuccessResponseSchema } from '../../common/response.schema'
+import { AsignaturaSchema } from '../../models/asignatura.schema'
 
 // Params
 export const GetAsignaturaByIdParamsSchema = z.object({

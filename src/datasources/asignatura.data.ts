@@ -2,8 +2,8 @@ import { Asignatura, AsignaturaData } from '../types/asignatura.type'
 import { generateETag } from '../utils/etag'
 import { z } from 'zod'
 
-import { AsignaturaSchema } from '../schemas/asignatura.schema'
-import { CursoSchema } from '../schemas/curso.schema'
+import { AsignaturaSchema } from '../schemas/models/asignatura.schema'
+import { CursoSchema } from '../schemas/models/curso.schema'
 
 import { loadAsignaturasFromFile } from './loaders/asignatura.loader'
 
