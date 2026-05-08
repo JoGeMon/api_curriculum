@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "nombre": "1° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "nombre": "2° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "nombre": "3° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "nombre": "4° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "nombre": "5° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "nombre": "6° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "nombre": "7° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "nombre": "8° Básico",
+    "asignaturas": [
+      {
+        "id": 1,
+        "nombre": "Matemáticas"
+      },
+      {
+        "id": 2,
+        "nombre": "Lenguaje"
+      },
+      {
+        "id": 3,
+        "nombre": "Ciencias Naturales"
+      }
+    ]
+  }
+]
